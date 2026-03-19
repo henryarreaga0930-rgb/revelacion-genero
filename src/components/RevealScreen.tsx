@@ -102,6 +102,8 @@ export default function RevealScreen({ userData }: RevealScreenProps) {
   const scrollToPredictions = () => {
     const element = document.getElementById('predictions-section')
     element?.scrollIntoView({ behavior: 'smooth' })
+    // La flecha desaparecerá inmediatamente después del primer toque
+    setShowPredictions(false)
   }
 
   if (isLoading) {
