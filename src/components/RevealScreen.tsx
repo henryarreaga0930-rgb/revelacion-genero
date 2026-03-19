@@ -22,7 +22,7 @@ export default function RevealScreen({ userData }: RevealScreenProps) {
   const [showCountdown, setShowCountdown] = useState(false)
   const [countdown, setCountdown] = useState(5)
   const [predictions, setPredictions] = useState<Prediction[]>([])
-  const [showPredictions, setShowPredictions] = useState(false)
+  const [showArrow, setShowArrow] = useState(false) // Renombrado de showPredictions a showArrow
   
   // Fotos de ejemplo - reemplazar con fotos reales
   const babyPhotos = [
@@ -91,7 +91,7 @@ export default function RevealScreen({ userData }: RevealScreenProps) {
             setIsRevealed(true)
             // Mostrar flechas de scroll después de un momento
             setTimeout(() => {
-              setShowPredictions(true)
+              setShowArrow(true)
             }, 2000)
           }, 500)
         }
@@ -102,8 +102,10 @@ export default function RevealScreen({ userData }: RevealScreenProps) {
   const scrollToPredictions = () => {
     const element = document.getElementById('predictions-section')
     element?.scrollIntoView({ behavior: 'smooth' })
-    // La flecha desaparecerá inmediatamente después del primer toque
-    setShowPredictions(false)
+    // La flecha desaparecerá inmediatamente después del primer toque, pero la sección de predicciones sigue visible
+    setTimeout(() => {
+      setShowArrow(false)
+    }, 100)
   }
 
   if (isLoading) {
@@ -261,7 +263,7 @@ export default function RevealScreen({ userData }: RevealScreenProps) {
 
             {/* Flecha animada para scroll */}
             <AnimatePresence>
-              {showPredictions && (
+              {showArrow && (
                 <motion.div
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -286,15 +288,14 @@ export default function RevealScreen({ userData }: RevealScreenProps) {
       </div>
 
       {/* Sección de Predicciones */}
-      <AnimatePresence>
-        {isRevealed && showPredictions && (
-          <motion.div
-            id="predictions-section"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="bg-white/90 backdrop-blur-sm py-16"
-          >
+      {isRevealed && (
+        <motion.div
+          id="predictions-section"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="bg-white/90 backdrop-blur-sm py-16"
+        >
             <div className="max-w-4xl mx-auto px-4">
               <h3 className="text-4xl font-bold text-center bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-12">
                 📊 Predicciones de la Familia
@@ -375,7 +376,6 @@ export default function RevealScreen({ userData }: RevealScreenProps) {
             </div>
           </motion.div>
         )}
-      </AnimatePresence>
 
       {/* Popup de Countdown */}
       <AnimatePresence>
