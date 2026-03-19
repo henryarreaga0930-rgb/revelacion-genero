@@ -29,7 +29,7 @@ export async function GET() {
     console.error('GET Error detallado:', error)
     return NextResponse.json({ 
       error: 'Failed to get predictions',
-      details: error.message 
+      details: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 })
   }
 }
@@ -61,11 +61,32 @@ export async function POST(request: NextRequest) {
     })
   } catch (error) {
     console.error('POST Error detallado:', error)
-    console.error('Stack:', error.stack)
+    console.error('Stack:', error instanceof Error ? error.stack : 'No stack available')
     return NextResponse.json({ 
       error: 'Failed to add prediction',
-      details: error.message,
-      stack: error.stack
+      details: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : 'No stack available'
+    }, { status: 500 })
+  }
+}
+
+// DELETE - Limpiar todas las predicciones (para producción)
+export async function DELETE() {
+  try {
+    console.log('DELETE: Limpiando todas las predicciones')
+    
+    const result = await redis.set('predictions', [])
+    console.log('DELETE: Predicciones limpiadas:', result)
+    
+    return NextResponse.json({ 
+      success: true,
+      message: 'All predictions cleared'
+    })
+  } catch (error) {
+    console.error('DELETE Error:', error)
+    return NextResponse.json({ 
+      error: 'Failed to clear predictions',
+      details: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 })
   }
 }
