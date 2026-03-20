@@ -134,7 +134,7 @@ export default function WelcomeForm({ onSubmit }: WelcomeFormProps) {
                       : 'bg-white border-gray-200 hover:border-pink-300 hover:bg-pink-50'
                   }`}
                 >
-                  👩‍👩‍👧‍� Familia de la esposa
+                  👩‍👩‍👧‍ Familia de la esposa
                 </button>
               </div>
               {errors.family && (

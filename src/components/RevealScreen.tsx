@@ -24,14 +24,14 @@ export default function RevealScreen({ userData }: RevealScreenProps) {
   const [predictions, setPredictions] = useState<Prediction[]>([])
   const [showArrow, setShowArrow] = useState(false) // Renombrado de showPredictions a showArrow
   
-  // Fotos de ejemplo - reemplazar con fotos reales
+  // Fotos reales del bebé
   const babyPhotos = [
-    'https://picsum.photos/400/300?random=1',
-    'https://picsum.photos/400/300?random=2',
-    'https://picsum.photos/400/300?random=3',
-    'https://picsum.photos/400/300?random=4',
-    'https://picsum.photos/400/300?random=5',
-    'https://picsum.photos/400/300?random=6'
+    '/images/bebe-1.jpeg',
+    '/images/bebe-2.jpeg', 
+    '/images/bebe-3.jpeg',
+    '/images/bebe-4.jpeg',
+    '/images/bebe-5.jpeg',
+    '/images/bebe-6.jpeg'
   ]
 
   // Cargar predicciones guardadas
@@ -298,7 +298,7 @@ export default function RevealScreen({ userData }: RevealScreenProps) {
         >
             <div className="max-w-4xl mx-auto px-4">
               <h3 className="text-4xl font-bold text-center bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-12">
-                📊 Predicciones de la Familia
+                 Predicciones de la Familia
               </h3>
               
               {/* Estadísticas */}
